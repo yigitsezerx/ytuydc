@@ -40,7 +40,7 @@
         }
 
         .loader-star {
-            font-size: 4rem; /* Mobilde biraz daha küçük */
+            font-size: 4rem;
             color: var(--accent-color);
             margin-bottom: 20px;
             filter: drop-shadow(0 0 10px rgba(164, 74, 63, 0.3));
@@ -160,7 +160,7 @@
 
         /* --- SECTIONS --- */
         section {
-            min-height: 100vh; padding: 120px 8% 50px; /* Mobilde üst boşluk biraz azaltıldı */
+            min-height: 100vh; padding: 120px 8% 50px;
             display: none; animation: fadeIn 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
         section.active { display: flex; flex-direction: column; justify-content: center; }
@@ -189,7 +189,6 @@
         .wotd-meaning { font-style: italic; opacity: 0.8; font-size: 1.1rem; }
 
         /* --- KARTLAR & RESPONSIVE GRID --- */
-        /* Mobilde yan yana sığması için minmax değerini düşürdük */
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; margin-top: 50px; perspective: 1000px; }
         
         .card {
@@ -238,19 +237,29 @@
             border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
         }
 
+        /* --- FOOTER DÜZELTİLDİ --- */
         footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; margin-top: auto; opacity: 0.7; }
+        
+        /* Kalp Animasyonu ve Rengi */
+        .footer-credits i { 
+            color: var(--accent-color); 
+            animation: heartbeat 1.5s infinite; 
+            margin-left: 5px; 
+        }
+        @keyframes heartbeat { 
+            0%, 100% { transform: scale(1); } 
+            50% { transform: scale(1.3); } 
+        }
 
         /* --- MOBILE ÖZEL AYARLAR --- */
         @media (max-width: 768px) {
             nav { width: 94%; left: 3%; padding: 12px 15px; top: 10px;}
-            .brand-text { display: none; } /* Mobilde yer kazanmak için yazıyı gizleyebiliriz veya küçültebiliriz */
+            .brand-text { display: none; } 
             
             .hamburger { display: block; }
             
             .nav-center {
                 position: fixed; top: 75px; right: 3%; width: 94%; height: auto;
-                background: var(--glass-bg); 
-                /* Mobilde arka planın daha okunaklı olması için */
                 background-color: var(--primary-bg);
                 backdrop-filter: blur(30px);
                 border: 1px solid var(--glass-border); border-radius: 20px;
@@ -264,19 +273,13 @@
             .nav-btn { width: 100%; text-align: center; padding: 12px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
             .nav-btn:last-child { border-bottom: none; }
             
-            /* Section Padding Ayarı */
             section { padding: 100px 5% 40px; }
-            
             .hero-container { flex-direction: column-reverse; text-align: center; gap: 30px; }
             .wotd-card { width: 100%; flex: auto; transform: rotate(0deg); padding: 30px;}
-            
-            .float-word { font-size: 1.5rem !important; } /* Mobilde devasa yazılar engellendi */
-            
-            /* Butonları tam genişlik yap */
+            .float-word { font-size: 1.5rem !important; }
             .cta-primary { width: 100%; max-width: 300px; }
         }
 
-        /* Daha küçük ekranlar için */
         @media (max-width: 380px) {
             .nav-right { gap: 4px; }
             .lang-btn { font-size: 0.8rem; padding: 2px; }
@@ -377,7 +380,6 @@
         <div class="team-container">
             <h3 style="margin-bottom: 30px; opacity:0.6; text-transform:uppercase; letter-spacing:2px;" data-lang="team_title">Yönetim</h3>
             <div class="team-member glass-panel">
-                <img src="https://via.placeholder.com/150" alt="Baskan" class="team-img">
                 <div class="team-name">Zerda HANIM</div>
                 <div class="team-role" data-lang="team_role_president">Başgan</div>
             </div>
@@ -429,7 +431,6 @@
 
     <script>
         // --- 3D TILT EFFECT (SADECE MASAÜSTÜ İÇİN OPTİMİZE EDİLDİ) ---
-        // Mobilde 'mousemove' gereksiz işlemci harcar, bunu engelliyoruz.
         const isTouchDevice = 'ontouchstart' in document.documentElement;
         
         if (!isTouchDevice) {
@@ -474,9 +475,6 @@
         function toggleMenu() { 
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('active');
-            
-            // Menü açıkken arka planı kilitle (kaydırmayı engelle) opsiyonel
-            // document.body.style.overflow = menu.classList.contains('active') ? 'hidden' : 'auto';
         }
         
         const translations = {
@@ -549,8 +547,7 @@
         function createWord() {
             const el = document.createElement('div'); el.classList.add('float-word');
             el.innerText = floatingTexts[Math.floor(Math.random() * floatingTexts.length)];
-            el.style.left = Math.random() * 80 + 10 + 'vw'; // Mobilde kenarlardan taşmasın
-            // Mobilde font boyutu daha küçük olsun
+            el.style.left = Math.random() * 80 + 10 + 'vw'; 
             const baseSize = window.innerWidth < 768 ? 1.2 : 2.5;
             const sizeScale = Math.random() * (baseSize + 0.5 - baseSize) + baseSize; 
             el.style.fontSize = sizeScale + 'rem';
@@ -583,7 +580,6 @@
             document.getElementById('modalTime').innerText = time;
             document.getElementById('modalDesc').innerText = desc;
             modal.style.display = "flex";
-            // Mobilde modal açılınca arka plan kaymasın
             document.body.style.overflow = "hidden";
         }
         function closeModal() { 
@@ -598,7 +594,7 @@
                 const loader = document.getElementById('loader-wrapper');
                 loader.classList.add('loader-hidden');
                 setTimeout(() => { loader.style.display = 'none'; }, 800);
-            }, 5000); // 5 saniye
+            }, 5000); 
         });
 
     </script>
