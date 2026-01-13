@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" data-theme="light">
+<html lang="tr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -10,20 +10,31 @@
     <style>
         /* --- CSS DEĞİŞKENLERİ --- */
         :root {
-            --primary-bg: #F1ECCE;
-            --glass-bg: rgba(255, 255, 255, 0.25);
-            --glass-border: rgba(255, 255, 255, 0.4);
-            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-            --text-color: #111344;
-            --accent-color: #A44A3F;
-            --blur-amount: 20px;
+            /* --- YENİ LIGHT MODE PALETİ (Daha Okunaklı) --- */
+            /* Arka plan artık daha düz ve temiz bir krem rengi */
+            --primary-bg: #F9F7F2; 
+            
+            /* Cam paneller light modda daha opak (beyaz) yapıldı ki yazılar net okunsun */
+            --glass-bg: rgba(255, 255, 255, 0.85); 
+            
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --glass-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            
+            /* Yazı rengi maksimum kontrast için çok koyu lacivert */
+            --text-color: #0B1120; 
+            
+            /* Vurgu rengi daha canlı bir kırmızı */
+            --accent-color: #D63031; 
+            
+            --blur-amount: 30px;
         }
 
+        /* --- DARK MODE PALETİ (Aynı Kaldı) --- */
         [data-theme="dark"] {
             --primary-bg: #0f0f11;
-            --glass-bg: rgba(20, 20, 20, 0.6);
-            --glass-border: rgba(255, 255, 255, 0.1);
-            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+            --glass-bg: rgba(20, 20, 20, 0.65);
+            --glass-border: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.6);
             --text-color: #f5f5f7;
             --accent-color: #ff6b6b;
         }
@@ -43,7 +54,7 @@
             font-size: 4rem;
             color: var(--accent-color);
             margin-bottom: 20px;
-            filter: drop-shadow(0 0 10px rgba(164, 74, 63, 0.3));
+            filter: drop-shadow(0 0 10px rgba(214, 48, 49, 0.4));
             animation: starPulse 2s ease-in-out infinite alternate;
         }
 
@@ -76,18 +87,20 @@
             overflow-x: hidden;
             min-height: 100vh;
             display: flex; flex-direction: column;
+            /* Dark Mode Gradient (Varsayılan) */
             background-image: 
                 radial-gradient(at 0% 0%, hsla(253,16%,7%,1) 0, transparent 50%), 
                 radial-gradient(at 50% 0%, hsla(225,39%,30%,1) 0, transparent 50%), 
                 radial-gradient(at 100% 0%, hsla(339,49%,30%,1) 0, transparent 50%);
-            transition: background 0.5s;
+            transition: background 0.5s, color 0.3s;
         }
         
+        /* Light Mode Gradient (YENİLENDİ: Daha sade ve temiz) */
         [data-theme="light"] body {
             background-image: 
-                radial-gradient(at 40% 20%, hsla(28,100%,74%,0.4) 0px, transparent 50%),
-                radial-gradient(at 80% 0%, hsla(189,100%,56%,0.2) 0px, transparent 50%),
-                radial-gradient(at 0% 50%, hsla(340,100%,76%,0.3) 0px, transparent 50%);
+                radial-gradient(at 10% 10%, hsla(40, 30%, 90%, 1) 0px, transparent 50%),
+                radial-gradient(at 90% 0%, hsla(210, 40%, 92%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 90%, hsla(0, 30%, 95%, 1) 0px, transparent 50%);
         }
 
         .glass-panel {
@@ -109,6 +122,9 @@
             font-weight: 900; font-size: 3rem; white-space: nowrap;
             animation: floatUp 25s linear infinite; font-family: 'Outfit', sans-serif;
         }
+        /* Light modda kayan yazıları biraz daha silik yapalım ki ana metni boğmasın */
+        [data-theme="light"] .float-word { opacity: 0.05; }
+
         @keyframes floatUp {
             0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
             50% { opacity: 0.1; }
@@ -120,17 +136,17 @@
             padding: 10px 20px;
             display: flex; justify-content: space-between; align-items: center;
             position: fixed; width: 90%; left: 5%; top: 15px; z-index: 1000;
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.5); /* Light modda nav daha belirgin */
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
             border: 1px solid var(--glass-border);
             border-radius: 50px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05);
             transition: 0.3s;
         }
         [data-theme="dark"] nav { background: rgba(0,0,0,0.3); }
 
         .brand-container { display: flex; align-items: center; gap: 10px; }
-        .ytu-logo-img { height: 35px; width: auto; transition: filter 0.4s; }
+        .ytu-logo-img { height: 35px; width: auto; transition: filter 0.4s; filter: brightness(0) saturate(100%) invert(6%) sepia(30%) saturate(1596%) hue-rotate(186deg) brightness(96%) contrast(94%); }
         [data-theme="dark"] .ytu-logo-img { filter: brightness(0) invert(1); }
         .brand-text { display: flex; flex-direction: column; line-height: 1.1; font-weight: 800; font-size: 0.8rem; letter-spacing: 0.5px; }
         .brand-text span { color: var(--accent-color); font-size: 0.65rem; font-weight: 600; text-transform: uppercase;}
@@ -141,7 +157,8 @@
             font-size: 0.95rem; color: var(--text-color); font-weight: 600;
             padding: 8px 16px; border-radius: 20px; transition: 0.3s;
         }
-        .nav-btn:hover { background: rgba(255,255,255,0.2); }
+        .nav-btn:hover { background: rgba(0,0,0,0.05); } /* Light mod hover */
+        [data-theme="dark"] .nav-btn:hover { background: rgba(255,255,255,0.2); }
 
         .nav-right { display: flex; gap: 8px; align-items: center; }
         .lang-btn {
@@ -176,9 +193,10 @@
             padding: 16px 45px; background: var(--accent-color);
             color: #fff; border: none; border-radius: 30px;
             font-size: 1.1rem; font-weight: 700; cursor: pointer; 
-            box-shadow: 0 10px 20px rgba(164, 74, 63, 0.3); transition: all 0.3s;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); transition: all 0.3s;
             width: fit-content;
         }
+        .cta-primary:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(0,0,0,0.2); }
         
         /* GÜNÜN KELİMESİ */
         .wotd-card {
@@ -234,13 +252,13 @@
         .social-icons a { 
             color: var(--text-color); font-size: 1.5rem; 
             width: 55px; height: 55px; display: flex; align-items: center; justify-content: center;
-            border-radius: 20px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 20px; background: rgba(0,0,0,0.05); border: 1px solid rgba(0,0,0,0.1);
         }
+        [data-theme="dark"] .social-icons a { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
 
-        /* --- FOOTER DÜZELTİLDİ --- */
+        /* --- FOOTER --- */
         footer { text-align: center; padding: 40px 20px; font-size: 0.85rem; margin-top: auto; opacity: 0.7; }
         
-        /* Kalp Animasyonu ve Rengi */
         .footer-credits i { 
             color: var(--accent-color); 
             animation: heartbeat 1.5s infinite; 
@@ -266,11 +284,13 @@
                 flex-direction: column; padding: 20px; gap: 10px;
                 transform: translateY(-20px); opacity: 0; pointer-events: none;
                 transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-                box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+                box-shadow: 0 20px 50px rgba(0,0,0,0.15);
                 z-index: 1001;
             }
             .nav-center.active { transform: translateY(0); opacity: 1; pointer-events: all; }
-            .nav-btn { width: 100%; text-align: center; padding: 12px; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.05); }
+            /* Light modda menü çizgileri daha belirgin olsun */
+            .nav-btn { width: 100%; text-align: center; padding: 12px; font-size: 1.1rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+            [data-theme="dark"] .nav-btn { border-bottom: 1px solid rgba(255,255,255,0.05); }
             .nav-btn:last-child { border-bottom: none; }
             
             section { padding: 100px 5% 40px; }
@@ -291,7 +311,6 @@
 
     <div id="loader-wrapper">
         <i class="fa-solid fa-star loader-star"></i>
-        <div class="loader-text">yıldızlar parlıyor..</div>
     </div>
 
     <div class="floating-words-container" id="floatingWords"></div>
@@ -330,7 +349,7 @@
             <button class="lang-btn active" onclick="setLang('tr')">TR</button>
             <button class="lang-btn" onclick="setLang('fr')">FR</button>
             <button class="lang-btn" onclick="setLang('en')">EN</button>
-            <button id="theme-toggle"><i class="fa-solid fa-moon"></i></button>
+            <button id="theme-toggle"><i class="fa-solid fa-sun"></i></button>
             <div class="hamburger" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></div>
         </div>
     </nav>
@@ -338,7 +357,7 @@
     <section id="home" class="active">
         <div class="hero-container">
             <div class="hero-text">
-                <h1>Biz <span id="typewriter"></span><span class="type-cursor">|</span></h1>
+                <h1><span id="typewriter"></span><span class="type-cursor">|</span></h1>
                 <p class="hero-desc" data-lang="hero_desc">Bismillahirrahmanirahim, kaliteye, Yıldız Teknik Üniversitesi'nin en züper kulübüne hoş geldiniz.</p>
                 <button class="cta-primary" onclick="showSection('contact')" data-lang="btn_join">Aramıza Katıl</button>
             </div>
@@ -430,9 +449,8 @@
     </footer>
 
     <script>
-        // --- 3D TILT EFFECT (SADECE MASAÜSTÜ İÇİN OPTİMİZE EDİLDİ) ---
+        // --- 3D TILT EFFECT ---
         const isTouchDevice = 'ontouchstart' in document.documentElement;
-        
         if (!isTouchDevice) {
             const cards = document.querySelectorAll('.card, .wotd-card');
             cards.forEach(card => {
@@ -454,11 +472,11 @@
 
         // --- DİNAMİK GÜNÜN KELİMESİ ---
         const wotdPool = [
-            { word: "Serendipity", origin: "(İngilizce)", tr: "Mutlu tesadüf.", fr: "Heureux hasard.", en: "Finding something good without looking for it." },
-            { word: "Yakamoz", origin: "(Türkçe)", tr: "Ayın suya yansıması.", fr: "Reflet de la lune.", en: "Moon reflection on water." },
-            { word: "Komorebi", origin: "(Japonca)", tr: "Ağaçlardan sızan ışık.", fr: "Lumière à travers les arbres.", en: "Sunlight through trees." },
-            { word: "Meraki", origin: "(Yunanca)", tr: "Ruhunu katarak yapmak.", fr: "Faire avec passion.", en: "Doing with soul." },
-            { word: "L'esprit de l'escalier", origin: "(Fransızca)", tr: "Sonradan gelen hazırcevaplık.", fr: "Penser à la réplique trop tard.", en: "Thinking of a reply too late." }
+            { word: "Serendipity", origin: "(EN)", tr: "Mutlu tesadüf.", fr: "Heureux hasard.", en: "Finding something good without looking for it." },
+            { word: "Yakamoz", origin: "(TR)", tr: "Ayın suya yansıması.", fr: "Reflet de la lune.", en: "Moon reflection on water." },
+            { word: "Komorebi", origin: "(JP)", tr: "Ağaçlardan sızan ışık.", fr: "Lumière à travers les arbres.", en: "Sunlight through trees." },
+            { word: "Meraki", origin: "(GR)", tr: "Ruhunu katarak yapmak.", fr: "Faire avec passion.", en: "Doing with soul." },
+            { word: "L'esprit de l'escalier", origin: "(FR)", tr: "Sonradan gelen hazırcevaplık.", fr: "Penser à la réplique trop tard.", en: "Thinking of a reply too late." }
         ];
 
         let currentLangCode = 'tr';
@@ -471,7 +489,7 @@
         }
         document.addEventListener('DOMContentLoaded', pickRandomWord);
 
-        // --- NAVIGASYON & DİL ---
+        // --- NAVIGASYON ---
         function toggleMenu() { 
             const menu = document.getElementById('mobileMenu');
             menu.classList.toggle('active');
@@ -532,12 +550,19 @@
         const toggleBtn = document.getElementById('theme-toggle');
         const icon = toggleBtn.querySelector('i');
         const html = document.documentElement;
-        if (localStorage.getItem('theme') === 'dark') { html.setAttribute('data-theme', 'dark'); icon.classList.replace('fa-moon', 'fa-sun'); }
+
+        if (localStorage.getItem('theme') === 'light') {
+            html.setAttribute('data-theme', 'light');
+            icon.classList.replace('fa-sun', 'fa-moon');
+        } else {
+            localStorage.setItem('theme', 'dark');
+        }
         
         toggleBtn.addEventListener('click', () => {
             const isDark = html.getAttribute('data-theme') === 'dark';
-            html.setAttribute('data-theme', isDark ? 'light' : 'dark');
-            localStorage.setItem('theme', isDark ? 'light' : 'dark');
+            const newTheme = isDark ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
             icon.classList.replace(isDark ? 'fa-sun' : 'fa-moon', isDark ? 'fa-moon' : 'fa-sun');
         });
 
@@ -557,7 +582,7 @@
         for(let j=0; j<4; j++) createWord(); setInterval(createWord, 3500);
 
         // Typewriter
-        const typeWords = ["çok uluslu yalnızlıkların yanında uzandık...", "gökyüzü çok yıldızlı...", "uhhhhh... baya iyiyiz yaaaa..", "Quebec'i kebek diye okuyoruz."];
+        const typeWords = ["Çok uluslu yalnızlıkların yanında uzandık... ve gökyüzü çok yıldızlı.", "Uhhhhh... baya iyiyiz yaaaa..", "Quebec'i kebek diye okuyoruz btw bu arada."];
         const typeElement = document.getElementById('typewriter');
         let wordIndex = 0; let charIndex = 0; let isDeleting = false;
         function type() {
@@ -588,7 +613,7 @@
         }
         window.onclick = function(e) { if (e.target == modal) closeModal(); }
 
-        // --- LOADER LOGIC ---
+        // --- LOADER ---
         window.addEventListener('load', () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader-wrapper');
